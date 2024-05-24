@@ -1,0 +1,449 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="description" content="Incontri su Telegram  - Domande su Flirtu">
+        <meta name="keywords" content="dating Telegram Incontri Flirtu"/>
+        <title>Telegram Dating</title>
+        <link rel="stylesheet" href="style.min.css">
+        <link rel="shortcut icon" href="photos/fav.ico" type="image/x-icon">
+        
+
+<script src="libs2.js"></script>
+<script>
+
+
+    var start_cant_be_pressed__already_pressed = null;
+
+    function Flirtu_start() {
+        return;
+        event = window.event;
+        console.log('pressed Flirtu_start')
+        event.preventDefault();
+
+        if (launch_pressed || !dd_sdk_loaded) {
+
+            if (launch_pressed) {
+                start_cant_be_pressed__already_pressed ? clearInterval(start_cant_be_pressed__already_pressed) : null;
+                start_cant_be_pressed__already_pressed = setInterval(function () {
+                    window.DD_LOGS ? DD_LOGS.onReady(function () {
+                        if (!dd_sdk_loaded) return;
+                        DD_LOGS.logger.info('Onclick is in progress', {status: 'warn'});
+                        if (!start_cant_be_pressed__already_pressed) return;
+                        clearInterval(start_cant_be_pressed__already_pressed);
+                        start_cant_be_pressed__already_pressed = null;
+                    }):null;
+                }, 250);
+            }
+
+            return;
+        }
+        // if (!window.DD_LOGS) {
+        //     console.log('no DD')
+        //     setTimeout(function () {
+        //         Flirtu_start();
+        //     }, 250);
+        //     return;
+        // }
+        launch_pressed = true;
+        console.log('pressed Flirtu_start continue');
+
+        DD_LOGS.onReady(function () {
+            DD_LOGS.logger.info('Onclick launch. Waiting up to 5 sec.');
+            var _start_time = new Date().getTime();
+
+            __interval_handle = setInterval(
+                function () {
+                    if (__rtkclickid || (new Date().getTime() - _start_time) >= 60000) {
+                        DD_LOGS.logger.info('Launch Bot[onclick]', {
+                            success: __rtkclickid ? 1 : 0,
+                            status: __rtkclickid ? 'info' : 'error'
+                        });
+                        clearInterval(__interval_handle);
+                        if (event && event.target && event.target.getAttribute('target') == '_blank') {
+                            window.open(tg_trrigger_url, '_blank')
+                        } else {
+                            location.href = tg_trrigger_url;
+                        }
+
+                    }
+                },
+                100
+            );
+        })
+    }
+
+</script>
+
+<script src="jquery.min.js"></script>
+<script src="libs.js"></script>
+<script>
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+     function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+</script>
+
+<script>
+    function globalExists(varName) {
+        // Calling eval by another name causes evalled code to run in a
+        // subscope of the global scope, rather than the local scope.
+        const globalEval = eval;
+        try {
+            globalEval(varName);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+$(document).ready(function (){
+    if (!globalExists('profiles')) return
+   for (k in profiles) {
+    $('<link rel="prefetch"/>').prop('href', profiles[k].pic).appendTo('head')
+}
+    var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes();
+$('.telegram-content__item .profile img').prop('src', profiles[0].pic);
+$('.telegram-content__item .profile .user-name').text(profiles[0].name + ', ' + profiles[0].age);
+
+$('.telegram-content__item .profile .got-it').html('<div class=\'img got-it-img\'></div>Received: ' + profiles[0].gifts + ' gifts');
+
+
+$('.telegram-content__item .profile .activity').html('<div class=\'activity-img img\'></div>Activity: ' + profiles[0].activity + ' minutes');
+$('.telegram-content__item .profile-time').text(time);
+
+i = 0;
+    $('.dislike-button,.like-button').click(function () {
+        if (i>=3) return;
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes();
+        i+=1;
+        if (i==3) {
+            setTimeout(function (){
+            $('.flirtu-simulation-container').addClass('blure');
+            $('.flirtu-simulation-modal').show();
+
+        }, 1000);
+        }
+
+        let emotion = $(this).hasClass('like-button')?'💚':'❌';
+        $(".telegram-content").append("<div class='dislike'>"+emotion+"</div><div class='like-time'>"+time +
+            "<img src='duble-tick-white.png'></div>");
+        if (i>=3) return;
+        gifts_row='';
+        
+        gifts_row='🎁Alınan: ' + profiles[0].gifts + ' hediye';
+        
+        $(".telegram-content").append("<div class='telegram-content__item telegram-content__item--profile'>" +
+            "<div class='profile'><img src='"+profiles[i].pic+"' class='photo'>" +
+        "<div class='profile-footer'><div><div class='user-name'>"+profiles[i].name + ', ' + profiles[i].age+"</div>" +
+        "<div class='activity'><div class='activity-img img'></div>⏱Etkinlik: "+profiles[i].activity+" dakika önce</div>" +
+        "<div class='got-it'><div class='img got-it-img'></div>"+gifts_row+"</div></div>" +
+        "<div class='profile-time'>"+time+"</div></div></div></div>");
+    })
+    // $('.like-button').click(function () {
+    //     i+=1;
+    //     $(".telegram-content").append("<div class='dislike'>💚</div><div class='like-time'>11:03<img src='//d33tflfwlj5scn.cloudfront.net/static/simulator/landing/img/duble-tick-white.png'></div>");
+    //     $(".telegram-content").append("<div class='telegram-content__item telegram-content__item--profile'><div class='profile'><img src='//d33tflfwlj5scn.cloudfront.net/static/simulator/landing/img/2.png' class='photo'><div class='profile-footer'><div><div class='user-name'>Vitaliy, 22</div><div class='activity'><div class='activity-img img'></div>Activity: 1 hour ago</div><div class='got-it'><div class='img got-it-img'></div>Got it: 4 gift</div></div><div class='profile-time'>11:05</div></div></div></div>");
+    // })
+    $('.button').click(function () {
+        $('.button').removeClass('button-animation');
+			$('.finger').fadeOut();
+    })
+});
+</script>
+
+
+    </head>
+    <body>
+<!-- --------------start header section------------ -->
+<header class="header">
+    <a href="https://t.me/winkiabot?start=rrwebsite" onclick="Flirtu_start()" class="telegram-icon tg-trigger tg-trigger-no-text">
+        <img src="photos/telegram.svg" alt="telegram icon" >
+    </a>
+    
+            
+                <img src="photos/header-bg.png" alt="" />
+            
+        <div class="header-content">
+                <h1>
+                    Telegram'da Arkadaş Bulun!
+                </h1>
+                <a href="https://t.me/winkiabot?start=rrwebsite" onclick="Flirtu_start()" class=" button--yellow tg-trigger">
+                    Hemen Deneyin!
+                </a>
+            </div>
+</header>
+<!-- end header section -->
+
+<!-- start about section -->
+        <section class="about">
+            <div class="about__content">
+                <div class="about-title">
+                    Yakınınızdaki kişilerin fotoğraflarına bakın ve Telegram'da özel olarak sohbet edin.
+                </div>
+<div class="finger">👈</div>
+<!-- start flirtu action -->
+<div class="flirtu-action">
+    <div class="fliru-action__container">
+       
+
+        <div class="flirtu-simulation">
+
+            <div class="flirtu-simulation-modal" style="display: none;">
+                Şimdi Deneyin!<br/>%100 Ücretsiz
+
+                <a href="https://t.me/winkiabot?start=rrwebsite" onclick="Flirtu_start()" class="open-telegram tg-trigger">
+                    Telegram'ı Açın
+                </a>
+
+            </div>
+        
+            <div class="flirtu-simulation-container">
+                
+                <div class="telegram-header">
+                <div class="telegram-header__left">
+                    <div class="back-arrow"></div>
+                    <div class="flirtu-logo">
+                        
+                    </div>
+                    <div class="telegram-header__text">
+                        <div class="telegram-header__title">
+                            Winkia
+                        </div>
+                        <div class="telegram-header__sub-title">
+                            Telegram'da Arkadaş Bulun! 
+                        </div>
+                    </div>
+                </div>
+                <div class="telegram-header__right">
+                    <div class="telegram-header__dot"></div>
+                    <div class="telegram-header__dot"></div>
+                    <div class="telegram-header__dot"></div>
+                </div>
+                
+            </div>
+
+                <div class="telegram-content">
+
+                    <div class="date">
+                        <script>document.write(capitalizeFirstLetter(moment().locale('en').format('MMMM D')))</script>
+                    </div>
+                    <div class="telegram-content__item telegram-content__item--profile">
+                        <div class="profile">
+                            <img alt="" class="photo">
+
+                            <div class="profile-footer">
+                                <div>
+                                    <div class="user-name">
+                                    </div>
+                                    <div class='activity'>
+                                        <div class='activity-img img'></div>
+                                    </div>
+                                    <div class='got-it'>
+                                        <div class='img got-it-img'></div>
+                                    </div>
+                                </div>
+
+                                <div class='profile-time'>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+<div class="content-footer">
+    <div>
+        
+        <div class="smile"></div>
+    <input type="text" placeholder="Message" readonly>
+    </div>
+
+    <div>
+        
+        <div class="add-doc"></div>
+        
+        <div class="add-img"></div>
+    </div>
+    </div>
+
+            <div class="buttons-wrapper">
+                <div class="button dislike-button button-animation">
+                    <span>❌</span>
+                </div>
+                <div class="button like-button button-animation">
+                    <span>💚</span>
+                </div>
+            </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- end flirtu action -->
+                <div class="about__steps">
+                    <div class="about__step-item">
+                        <div class="about__step-num">
+                            1
+                        </div>
+                        <div class="about__step-text">
+                            
+                            Çevrenizdeki bekarları değerlendirin
+                            
+                        </div>
+                    </div>
+                    <div class="about__step-item">
+                        <div class="about__step-num">
+                            2
+                        </div>
+                        <div class="about__step-text">
+                            
+                            Telegram üzerinden güvenli bir şekilde sohbet edin.
+                            
+                        </div>
+                    </div>
+                    <div class="about__step-item">
+                        <div class="about__step-num">
+                            3
+                        </div>
+                        <div class="about__step-text">
+                            
+                            Yeni arkadaşlar Bul!
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <img src="photos/heart.png" alt="" class="about__background" />
+</section>
+<!-- end about section -->
+
+<!-- start rule section -->
+<section class="rule">
+    <div class="rule__title">
+        
+        Dünyanın en geniş kapsamlı özel yeni insanlarla tanışma ağının bir parçası olun!
+        
+    </div>
+    <a href="https://t.me/winkiabot?start=rrwebsite" onclick="Flirtu_start()" class="button--yellow tg-trigger">
+        Telegram'da Arkadaş Bulun! 
+     </a>
+
+
+            <div class="rules__list">
+                <div class="rules__item">
+                    <div class="rules__icon-wrapper">
+                        <div class="rules-icon__circle">
+                            <img src="photos/icon1.png" alt="" />
+                        </div>
+                    </div>
+                    <div class="rules__text">
+                        <div class="rules__text-num">370,000 ++</div>
+                        Aktif kullanıcılar
+                    </div>
+                </div>
+                <div class="rules__item">
+                    <div class="rules__icon-wrapper">
+                        <div class="rules-icon__circle">
+                            <img src="photos/icon5.png" alt="" />
+                        </div>
+                    </div>
+                    <div class="rules__text">
+                        Sadece Yetişkinler (18+)
+                    </div>
+                </div>
+                <div class="rules__item">
+                    <div class="rules__icon-wrapper">
+                        <div class="rules-icon__circle">
+                            <img src="photos/icon2.png" alt="" />
+                        </div>
+                    </div>
+                    <div class="rules__text">
+                        Kayıt Gerekmiyor
+                    </div>
+                </div>
+                <div class="rules__item">
+                    <div class="rules__icon-wrapper">
+                        <div class="rules-icon__circle">
+                            <img src="photos/icon3.png" alt="" />
+                        </div>
+                    </div>
+                    <div class="rules__text"><b>100%</b> gizli</div>
+                </div>
+                <div class="rules__item">
+                    <div class="rules__icon-wrapper">
+                        <div class="rules-icon__circle">
+                            <img src="photos/icon4.png" alt="" />
+                        </div>
+                    </div>
+                    <div class="rules__text">
+                        <span>Ücretsiz kullanım</span>
+                    </div>
+                </div>
+            </div>
+</section>
+<!-- end rule section -->
+
+        
+
+<!-- start footer -->
+<footer class="footer">
+
+        <div class="copy">
+            © 2024 Winkia. All rights reserved.
+
+        </div>
+
+    </footer>
+       
+<!-- end footer -->
+
+<!-- start bottom background -->
+ <div class="bottom__bg">
+    <img src="photos/footer-bg.png" alt="" />
+</div>
+<!-- end bottom background -->
+
+
+
+
+
+
+
+<script>
+    
+        let profiles = [
+            {name: 'Lori', age: 28, pic: 'photos/en_1.jpg', gifts: getRandomInt(2, 10), activity: getRandomInt(10, 59)},
+            {name: 'Lucia', age: 32, pic: 'photos/en_2.jpg', gifts: getRandomInt(2, 10), activity: getRandomInt(10, 59)},
+            {name: 'Ivonne', age: 25, pic: 'photos/en_3.jpg', gifts: getRandomInt(2, 10), activity: getRandomInt(10, 59)},
+        ];
+    
+    
+    moment.locale('en')
+</script>
+
+
+
+
+
+
+
+
+<style>
+    .button--blue, .button--yellow {
+        text-align: center;
+    }
+</style>
+    </body>
+</html>
