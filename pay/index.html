@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Telegram Dating</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="pay.css" type="text/css" />
+    
+</head>
+
+<body>
+
+    <script
+    async
+    src="https://pay.google.com/gp/p/js/pay.js"
+    onload="loadGooglePay()">
+    </script>
+    <script>
+        const baseRequest = {
+            apiVersion: 2,
+            apiVersionMinor: 0
+        };
+        const tokenizationSpecification = {
+            type: 'PAYMENT_GATEWAY',
+            parameters: {
+                'gateway': 'example',
+                'gatewayMerchantId': 'exampleGatewayMerchantId'
+            }
+        };
+        const allowedCardNetworks = ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"];
+        const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
+        const baseCardPaymentMethod = {
+            type: 'CARD',
+            parameters: {
+                allowedAuthMethods: allowedCardAuthMethods,
+                allowedCardNetworks: allowedCardNetworks
+            }
+        };
+        const cardPaymentMethod = Object.assign(
+            {tokenizationSpecification: tokenizationSpecification},
+            baseCardPaymentMethod
+        );
+        function loadGooglePay(){
+            const paymentsClient =
+                new google.payments.api.PaymentsClient({environment: 'TEST'});
+            const isReadyToPayRequest = Object.assign({}, baseRequest);
+            isReadyToPayRequest.allowedPaymentMethods = [baseCardPaymentMethod];
+            paymentsClient.isReadyToPay(isReadyToPayRequest)
+                .then(function(response) {
+                if (response.result) {
+                    // add a Google Pay payment button
+                    const button =
+                        paymentsClient.createButton({
+                            onClick: () => startGooglePay(paymentsClient),
+                            allowedPaymentMethods: [],
+                            buttonColor: 'white',
+                            buttonType: 'pay',
+                            buttonRadius: 4,
+                            buttonLocale: 'tr',
+                        }); // same payment methods as for the loadPaymentData() API call
+                    document.getElementById('googlepaybtn').appendChild(button);	
+                }
+                })
+                .catch(function(err) {
+                // show error in developer console for debugging
+                console.error(err);
+                });
+        }
+        function startGooglePay(paymentsClient){
+            const paymentDataRequest = Object.assign({}, baseRequest);
+            paymentDataRequest.allowedPaymentMethods = [cardPaymentMethod];
+            paymentDataRequest.transactionInfo = {
+                totalPriceStatus: 'FINAL',
+                totalPrice: '70.00',
+                currencyCode: 'USD',
+                countryCode: 'US'
+            };
+            paymentDataRequest.merchantInfo = {
+                merchantName: 'Example Merchant',
+                merchantId: '12345678901234567890'
+            };
+            paymentsClient.loadPaymentData(paymentDataRequest).then(function(paymentData){
+                // if using gateway tokenization, pass this token without modification
+                const paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+                console.log(paymentData,paymentToken);
+                document.getElementById('successPay').style.display='block';
+                document.getElementById('startPay').style.display='none';
+            }).catch(function(err){
+                // show error in developer console for debugging
+                console.error(err);
+            });
+        }
+    </script>
+    <!-- -----------start header------------ -->
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="#">
+                    <img src="winkia-white.png" alt="">
+                    <h1>Telegram Flört</h1>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <!-- -------------end header------------- -->
+
+    <!-- --------------start content----------- -->
+    <div class="content wrapper" id="successPay" style="display:none;">
+        <div class="container">
+            <div class="content__header" style="padding-bottom: 0;">
+                <div class="content__header-text" style="
+                        text-align: center;
+                            width: 100%;
+                            font-size: 18px;
+                            line-height: 24px;
+                            padding-bottom: 0;
+                        ">
+                    <img src="correct.png" /><br/>
+                    <b>Siparişiniz başarıyla tamamlandı</b><br/>
+                    <p>Siparişiniz <b>Google Pay (Visa **** 9846)</b> ile başarıyla işlendi.<br/>Fatura için e-postanızı kontrol edin.</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content wrapper" id="startPay">
+        <div class="container">
+            
+            <div class="content__header" style="padding-bottom: 0;">
+                <div class="content__header-text" style="
+                        text-align: center;
+                            width: 100%;
+                            font-size: 18px;
+                            line-height: 24px;
+                            padding-bottom: 0;
+                        ">
+                    
+                    <b>Özel Promosyon!<br>Son Günler, Acele Edin!</b>
+                    
+                </div>
+            </div>
+
+            <div class="content__header" style="padding-top: 0;">
+
+                <img src="start.svg" alt="">
+                <div class="content__header-text">
+                    VIP
+                </div>
+            </div>
+            
+
+            <div class="items-list rate" style="padding-bottom: 50px;">
+                
+                <div class="item item--green" plan="4">
+                    <div class="item__content">
+                        <div class="item__price">
+                            29.99₺/Ay
+                        </div>
+                        <div class="item__content-footer">
+                            <div class="old-price">
+                                70₺
+                            </div>
+                            <div class="term">
+                                12 Aylar
+                            </div>
+                        </div>
+                        <div class="action best-price">En İyi Fiyat</div>
+                    </div>
+                    <div class="item__footer">
+                        Toplam: 359.99 $
+                    </div>
+                </div>
+
+                
+                <div class="item" plan="3">
+                    <div class="item__content">
+                        <div class="item__price">
+                            49.99₺/Ay
+                        </div>
+                        <div class="item__content-footer">
+                            <div class="old-price">
+                                70₺
+                            </div>
+                            <div class="term">
+                                6 Aylar
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item__footer">
+                        Toplam: 299.99₺
+                    </div>
+                </div>
+                
+                
+                <div class="item" plan="1">
+                    <div class="item__content ">
+                        <div class="item__price">
+                            70₺ / Ay
+                        </div>
+                        <div class="item__content-footer">
+                            <div class="old-price" style="visibility: hidden;">
+                                
+                            </div>
+                            <div class="term">
+                                1 Ay
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item__footer">
+                        Toplam: 70₺
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="next-button-wrapper" style="text-align: center;">
+            <div class="button" id="googlepaybtn">
+            </div>
+                <div class="item__footer" style="text-align: center;">
+                    Depozitoya devam ederek, 
+                    <a style="color: #adb0b6;font-weight: 600;" target="_blank" href="https://winkia.app/agreement.html">şartları ve koşulları</a> 
+                    kabul etmiş olursunuz.
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- -----------end content----------- -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="pay.js"></script>
+</body>
+
+</html>
